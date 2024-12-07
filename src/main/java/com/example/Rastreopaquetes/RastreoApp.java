@@ -74,7 +74,7 @@ public class RastreoApp extends Application {
         botonLimpiar.setOnAction(e -> limpiarHistorial());
 
         seccion.getChildren().addAll(
-                new Label("Historial de Consultas"),
+                new Label("Historial de Consultas -- Microservicio (Redis-Cache)"),
                 listaHistorial,
                 areaDetallesHistorial,
                 botonLimpiar
@@ -101,6 +101,11 @@ public class RastreoApp extends Application {
         Scene escena = new Scene(raiz, 900, 400);
         escenario.setScene(escena);
         escenario.setTitle("Sistema de Rastreo de Paquetes");
+        escenario.setOnCloseRequest(event -> {
+            Platform.exit();
+            RastreopaquetesApplication.getSpringContext().close();
+            System.exit(0);
+        });
         escenario.show();
     }
 
